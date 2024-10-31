@@ -9,6 +9,7 @@ __pycache__/
 *.zip
 
 data/
+AutoML_*/
 
 # Distribution / packaging
 .Python
