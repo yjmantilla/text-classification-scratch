@@ -331,7 +331,7 @@ import itertools as it
 import joblib
 # grid search
 
-def opt(class_,regs,stepsizes,iters):
+def opt(class_,regs,stepsizes,iters,X_train,y_train,X_val,y_val):
     import itertools as it
     best_error = 1
     best_args = None
@@ -340,9 +340,9 @@ def opt(class_,regs,stepsizes,iters):
     def train_model(i,args):
         import numpy as np
 
-        model = class_(np.random.randn(prep_data_train.shape[1]), args[0])
-        model.train(prep_data_train[valset], labels_train_sign[valset], args[1], args[2])
-        error = model.error_rate(prep_data_train[trainset], labels_train_sign[trainset]) #not touching the test set
+        model = class_(np.random.randn(X_train.shape[1]), args[0])
+        model.train(X_train, y_train, args[1], args[2])
+        error = model.error_rate(X_val, y_val) #not touching the test set
         print(i)
         return model, error
     
@@ -635,7 +635,7 @@ if __name__ == '__main__':
         iters = [30,50, 100,500]
 
         if not os.path.exists(f'best_args_{mod}.npy'):
-            best_args, best_error,results,combs = opt(model_, regs, stepsizes, iters)
+            best_args, best_error,results,combs = opt(model_, regs, stepsizes, iters,prep_data_train[valset], labels_train_sign[valset],prep_data_train[trainset], labels_train_sign[trainset])
             reg=best_args[0]
             stepsize=best_args[1]
             iters=best_args[2]

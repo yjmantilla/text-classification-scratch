@@ -8,8 +8,10 @@ __pycache__/
 
 *.zip
 
+scratch/
 data/
 AutoML_*/
+AutogluonModels/
 
 # Distribution / packaging
 .Python
